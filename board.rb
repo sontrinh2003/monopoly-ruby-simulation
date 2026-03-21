@@ -9,8 +9,8 @@ class Board
     @spaces = data.map { |space_data| space_data["type"] == "property" ? Property.new(space_data) : space_data }
   end
 
-  def get_space(position)
+  def get_space_name(position)
     # Return the space at the given position
-    return @spaces[position]
+    return @spaces[position].name
   end
 end
