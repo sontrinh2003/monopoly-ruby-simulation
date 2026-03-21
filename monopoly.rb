@@ -19,7 +19,7 @@ Land on a space:
 
 Rent:
 - Rent is equal to the property's price
-- Rent isdoubled if the owner has all properties of that color
+- Rent is doubled if the owner has all properties of that color
 
 =end
 
@@ -40,12 +40,7 @@ class MonopolyGame
 	def play
 		# Implement game logic: roll dice, move player, handle landing on spaces
 		# Loop through players and rolls until a player goes bankrupt, then determine the winner
-		@board.spaces.each do |space|
-			puts space
-		end
-		@roll_data.each do |roll|
-			puts roll
-		end
+
 	end
 end
 
@@ -53,22 +48,15 @@ def main
 	# Initialize board and players, then start the game
 	
 	# Load board data from file, create Board object
-	print "Enter the file name of the Monopoly board: "
-  board_file = gets.chomp
-	while File.exist?(board_file) == false || File.extname(board_file) != ".json"
-		puts "File not exists or invalid."
-		print "Enter the file name of the Monopoly board: "
-		board_file = gets.chomp
-	end
-	board_data = JSON.parse(File.read(board_file))
+	board_data = JSON.parse(File.read("board.json"))
 	board = Board.new(board_data)
 
 	# Load roll data from file
-	print "Enter the file name of dice rolls data: "
+	print "Enter the filename of dice rolls data: "
 	roll_file = gets.chomp
 	while File.exist?(roll_file) == false	|| File.extname(roll_file) != ".json"
 		puts "File not exists or invalid."
-		print "Enter the file name of dice rolls data: "
+		print "Enter the filename of dice rolls data: "
 		roll_file = gets.chomp
 	end
 	roll_data = JSON.parse(File.read(roll_file))
