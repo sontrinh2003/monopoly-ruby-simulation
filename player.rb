@@ -13,4 +13,45 @@ class Player
 		@bankrupcy = false
 		@first_move = true
 	end
+
+  def move(steps, board_size)
+    # Move player position and handle passing GO
+    old_pos = @pos
+    @pos = (@pos + steps) % board_size
+    
+    if !@first_move && @pos < old_pos
+      # Passed GO, receive $1
+      @money += 1
+    end
+    
+    @first_move = false
+  end
+
+  def buy_property(property)
+    # Buy property if player has enough money
+    if @money >= property.price
+      @money -= property.price
+      @properties << property
+      property.owner = self
+    else
+      # Not enough money to buy property, player goes bankrupt
+      @bankrupcy = true
+    end
+  end
+
+  def pay_rent(property, full_set_owned)
+    # Pay rent to property owner
+    rent = property.price
+    if full_set_owned
+      rent *= 2 # Rent is doubled if owner has all properties of that color
+    end
+
+    if @money >= rent
+      @money -= rent
+      property.owner.money += rent
+    else
+      # Not enough money to pay rent, player goes bankrupt
+      @bankrupcy = true
+    end
+  end
 end
