@@ -54,7 +54,25 @@ class MonopolyGame
 				# Get the space the player landed on
 				space = @board.spaces[player.pos]
 
+				# DEBUG ONLY: Print the turn details
 				puts "Turn #{roll_index}: #{player.name} rolls #{step} and lands on #{space.is_a?(Property) ? space.name : space['name']}"
+
+				if space.is_a?(Property)
+					if space.owner.nil?
+						# Unowned property, player must buy it
+						player.buy_property(space)
+						
+						# DEBUG ONLY: Print the buy details
+						puts "#{player.name} buys #{space.name} for $#{space.price}. Remaining money: $#{player.money}"
+
+					elsif space.owner != player
+						# Owned by another player, pay rent
+						
+						# DEBUG ONLY: Print the rent details
+						puts "#{player.name} lands on #{space.name}, owned by #{space.owner.name}. Paying rent..."
+
+					end
+				end
 
 				roll_index += 1
 			end
@@ -63,6 +81,12 @@ class MonopolyGame
 		output_results
 
 	end
+
+	def output_results
+		# Output final results: winner and player statuses
+
+	end
+
 end
 
 def main
