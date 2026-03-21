@@ -11,6 +11,7 @@ class Board
 
   def get_space_name(position)
     # Return the space at the given position
-    return @spaces[position].name
+    space = @spaces[position]
+    return space.is_a?(Property) ? space.name : space["name"]
   end
 end
