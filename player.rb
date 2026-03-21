@@ -35,7 +35,7 @@ class Player
       property.owner = self
     else
       # Not enough money to buy property, player goes bankrupt
-      @bankrupcy = true
+      go_bankrupt
     end
   end
 
@@ -51,7 +51,15 @@ class Player
       property.owner.money += rent
     else
       # Not enough money to pay rent, player goes bankrupt
-      @bankrupcy = true
+      go_bankrupt
     end
+  end
+
+  def go_bankrupt
+    @money = 0
+    @bankrupcy = true
+    
+    # Potential: reset properties to unowned
+    
   end
 end
