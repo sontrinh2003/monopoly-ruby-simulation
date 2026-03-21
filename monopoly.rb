@@ -40,6 +40,27 @@ class MonopolyGame
 	def play
 		# Implement game logic: roll dice, move player, handle landing on spaces
 		# Loop through players and rolls until a player goes bankrupt, then determine the winner
+		
+		roll_index = 0
+
+		while @players.all? { |player| !player.bankrupcy }
+			@players.each do |player|
+				break if player.bankrupcy || roll_index >= @roll_data.length
+
+				# Get the current roll for the player
+				step = @roll_data[roll_index]
+				player.move(step, @board.spaces.length)
+
+				# Get the space the player landed on
+				space = @board.spaces[player.pos]
+
+				puts "Turn #{roll_index}: #{player.name} rolls #{step} and lands on #{space.is_a?(Property) ? space.name : space['name']}"
+
+				roll_index += 1
+			end
+		end
+
+		output_results
 
 	end
 end
