@@ -35,7 +35,7 @@ require_relative 'space'
 require_relative 'player'
 require_relative 'property'
 
-DEBUG = false # Set to true to enable debug output, false to disable
+DEBUG = ARGV.include?("--debug") # Default: false
 
 class MonopolyGame
 	
@@ -136,7 +136,7 @@ def main
 
 	# Load roll data from file
 	print "Enter the filename of dice rolls data: "
-	roll_file = gets.chomp
+	roll_file = STDIN.gets.chomp
 	while File.exist?(roll_file) == false	|| File.extname(roll_file) != ".json"
 		puts "File not exists or invalid."
 		print "Enter the filename of dice rolls data: "
