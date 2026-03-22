@@ -29,6 +29,8 @@ require_relative 'space'
 require_relative 'player'
 require_relative 'property'
 
+DEBUG = false # Set to true to enable debug output, false to disable
+
 class MonopolyGame
 	
 	def initialize(players, board, roll_data)
@@ -54,31 +56,41 @@ class MonopolyGame
 				# Get the space the player landed on
 				space = @board.spaces[player.pos]
 
-				# DEBUG ONLY: Print the turn details
-				# puts "\n"
-				# puts "Turn #{roll_index}: #{player.name} rolls #{step} and lands on #{space.name}"
+				# DEBUG: Print the turn details
+				if DEBUG
+					puts "\n"
+					puts "Turn #{roll_index}: #{player.name} rolls #{step} and lands on #{space.name}"
+				end
 
 				if space.is_a?(Property)
 					if space.owner.nil?
 						# Unowned property, player must buy it
 						player.buy_property(space)
 
-						# DEBUG ONLY: Print the buy details
-						# puts "#{player.name} buys #{space.name} for $#{space.price}. Remaining money: $#{player.money}"
+						# DEBUG: Print the buy details
+						if DEBUG
+							puts "#{player.name} buys #{space.name} for $#{space.price}. Remaining money: $#{player.money}"
+						end
+
 					elsif space.owner == player
 						# Owned by the player, nothing happens
 						# Future enhancements: Allow player to add houses/hotels for extra rent
 						
-						# DEBUG ONLY: Print the owned details
-						# puts "#{player.name} owns #{space.name}. No action taken."
+						# DEBUG: Print the owned details
+						if DEBUG
+							puts "#{player.name} owns #{space.name}. No action taken."
+						end
+
 					else 
 						# Owned by another player, pay rent
 						full_set_owned = owns_full_set?(space.owner, space.color)
 						player.pay_rent(space, full_set_owned)
 
 						# DEBUG ONLY: Print the rent details
-						# puts "#{player.name} pays rent to #{space.owner.name} for #{space.name}. Remaining money: $#{player.money}"
-						# puts "#{space.owner.name} receives rent. Total money: $#{space.owner.money}"
+						if DEBUG
+							puts "#{player.name} pays rent to #{space.owner.name} for #{space.name}. Remaining money: $#{player.money}"
+							puts "#{space.owner.name} receives rent. Total money: $#{space.owner.money}"
+						end
 					end
 				end
 
@@ -139,4 +151,4 @@ def main
 	game.play
 end
 
-main()
+main
