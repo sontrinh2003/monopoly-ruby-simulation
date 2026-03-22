@@ -25,11 +25,11 @@ Rent:
 
 require 'json'
 require_relative 'board'
+require_relative 'space'
 require_relative 'player'
 require_relative 'property'
 
 class MonopolyGame
-	attr_accessor :players, :board, :roll_data
 
 	def initialize(players, board, roll_data)
 		@players = players
@@ -55,22 +55,30 @@ class MonopolyGame
 				space = @board.spaces[player.pos]
 
 				# DEBUG ONLY: Print the turn details
-				puts "Turn #{roll_index}: #{player.name} rolls #{step} and lands on #{space.is_a?(Property) ? space.name : space['name']}"
+				# puts "\n"
+				# puts "Turn #{roll_index}: #{player.name} rolls #{step} and lands on #{space.name}"
 
 				if space.is_a?(Property)
 					if space.owner.nil?
 						# Unowned property, player must buy it
 						player.buy_property(space)
-						
+
 						# DEBUG ONLY: Print the buy details
-						puts "#{player.name} buys #{space.name} for $#{space.price}. Remaining money: $#{player.money}"
-
-					elsif space.owner != player
-						# Owned by another player, pay rent
+						# puts "#{player.name} buys #{space.name} for $#{space.price}. Remaining money: $#{player.money}"
+					elsif space.owner == player
+						# Owned by the player, nothing happens
+						# Future enhancements: Allow player to add houses/hotels for extra rent
 						
-						# DEBUG ONLY: Print the rent details
-						puts "#{player.name} lands on #{space.name}, owned by #{space.owner.name}. Paying rent..."
+						# DEBUG ONLY: Print the owned details
+						# puts "#{player.name} owns #{space.name}. No action taken."
+					else 
+						# Owned by another player, pay rent
+						full_set_owned = owns_full_set?(space.owner, space.color)
+						player.pay_rent(space, full_set_owned)
 
+						# DEBUG ONLY: Print the rent details
+						# puts "#{player.name} pays rent to #{space.owner.name} for #{space.name}. Remaining money: $#{player.money}"
+						# puts "#{space.owner.name} receives rent. Total money: $#{space.owner.money}"
 					end
 				end
 
@@ -82,11 +90,15 @@ class MonopolyGame
 
 	end
 
+	def owns_full_set?(owner, color)
+		properties = @board.spaces.select { |s| s.is_a?(Property) && s.color == color }
+		return properties.all? { |p| p.owner == owner }
+	end
+
 	def output_results
 		# Output final results: winner and player statuses
 
 	end
-
 end
 
 def main
