@@ -18,7 +18,7 @@ The game follows a simplified rule set where:
 Ensure you have Ruby installed, then run:
 
 ```bash
-ruby .\monopoly.rb
+ruby monopoly.rb
 ```
 
 You will be prompted to enter a dice rolls file:
@@ -66,7 +66,7 @@ The application is organised into the following classes:
 * `board.rb` - Loads and manages the game board
 * `space.rb` - Base class representing a generic board space
 * `property.rb` - Inherits from `Space`, represents purchasable properties
-* `player.rb` - Represents each player, including money, position, and owned properties
+* `player.rb` - Represents each player, including money, position, owned properties and methods to move, buy properties or pay rent
 
 ### Design Notes
 
@@ -127,26 +127,7 @@ A JSON array of dice rolls:
 
 ---
 
-### Rent Calculation
-
-Rent is calculated as:
-
-* Base = property price
-* Doubled if all properties of the same colour are owned
-
----
-
-### Bankruptcy Handling
-
-* A player is considered bankrupt when their balance drops below $0
-* The game ends immediately at that point
-* Final standings are calculated from remaining balances
-
----
-
 ## Testing
-
-This project is designed to be easily testable due to its deterministic nature.
 
 Recommended approach:
 
@@ -164,12 +145,10 @@ Recommended approach:
 
 ## Extensibility
 
-The current structure allows easy extension for:
+The current app design allows easy extension for:
 
-* Chance cards
-* Jail or Tax spaces rules
-* Property improvements: houses/hotels
-* Auctions
-* Additional players or rule variations (trading/selling properties, etc.)
+* Chance cards, Jail or Tax spaces rules
+* Property improvements: houses/hotels to increase rent
+* Additional players or rule variations (auctions, trading/selling properties, etc.)
 
 
