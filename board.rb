@@ -6,12 +6,18 @@ class Board
   attr_accessor :spaces
   def initialize(data)
     # Create spaces from data
-    @spaces = data.map { |space_data| space_data["type"] == "property" ? Property.new(space_data) : space_data }
+    @spaces = data.map { |space_data| 
+    case space_data["type"]
+      # Future enhancement: Add other space types (chance, community chest, tax, jail, etc) with their own classes inheriting from a base Space class
+      when "property"
+        Property.new(space_data)
+      else
+        Space.new(space_data["name"], space_data["type"])
+    end }
   end
 
   def get_space_name(position)
     # Return the space at the given position
-    space = @spaces[position]
-    return space.is_a?(Property) ? space.name : space["name"]
+    return @spaces[position].name
   end
 end
