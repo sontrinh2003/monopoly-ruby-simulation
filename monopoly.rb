@@ -30,7 +30,7 @@ require_relative 'player'
 require_relative 'property'
 
 class MonopolyGame
-
+	
 	def initialize(players, board, roll_data)
 		@players = players
 		@board = board
@@ -97,7 +97,15 @@ class MonopolyGame
 
 	def output_results
 		# Output final results: winner and player statuses
+		puts "Game Over!"
+		puts "Summary:"
+		@players.each do |player|
+			puts "#{player.name}: $#{player.money}, Position: #{@board.get_space_name(player.pos)}, Bankrupt: #{player.bankrupcy ? 'Yes' : 'No'}"
+		end
 
+		# Determine winner (player with most money)
+		winner = @players.max_by { |player| player.money }
+		puts "WINNER: #{winner.name}"
 	end
 end
 
