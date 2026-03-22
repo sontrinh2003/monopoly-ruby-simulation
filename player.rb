@@ -1,6 +1,7 @@
 # Class Player: Manage player status
 # Attributes: name, money, position, properties owned, bankruptcy status
 # Methods: Initialize player, update money, move position, buy property, pay rent, check bankruptcy
+# Future enhancements: Add methods for trading properties, adding houses/hotels, handling jail, etc.
 
 class Player
 	attr_accessor :name, :money, :pos, :properties, :bankrupcy

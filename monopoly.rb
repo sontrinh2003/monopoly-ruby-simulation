@@ -21,6 +21,12 @@ Rent:
 - Rent is equal to the property's price
 - Rent is doubled if the owner has all properties of that color
 
+Future Enhancements:
+- Add more space types (chance, community chest, tax, jail, etc)
+- Add property improvements (houses, hotels) for increased rent
+- Add trading between players
+- Add more complex rules (e.g. going to jail, free parking, etc)
+
 =end
 
 require 'json'
