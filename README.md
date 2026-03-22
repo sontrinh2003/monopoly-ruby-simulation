@@ -44,7 +44,7 @@ This will output detailed logs of each turn, including:
 * Rent payments
 * Money changes
 
-## Example Output
+## Example Output: `rolls_1.json`
 
 ```
 Game Over!
